@@ -19,5 +19,25 @@ func SingleDayImageHandler(c *gin.Context) {
 		return
 	}
 
+	_ = image.ViewUp()
+
 	c.Redirect(302, image.HDUrl)
+}
+
+func RandomImageHandler(c *gin.Context) {
+	uhd := c.Query("size") == "uhd"
+
+	image, err := model.GetRandomImage()
+	if err != nil {
+		c.Status(500)
+		return
+	}
+
+	_ = image.ViewUp()
+
+	if uhd {
+		c.Redirect(302, image.UHDUrl)
+	} else {
+		c.Redirect(302, image.HDUrl)
+	}
 }
