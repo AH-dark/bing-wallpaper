@@ -9,14 +9,16 @@ import (
 )
 
 var (
-	configPath = "config.ini"
+	configPath string
+	skipConf   bool
 )
 
 func init() {
-	flag.StringVar(&configPath, "c", configPath, "config file path")
+	flag.StringVar(&configPath, "c", "config.ini", "config file path")
+	flag.BoolVar(&skipConf, "skip-conf", false, "skip load config file")
 	flag.Parse()
 
-	bootstrap.InitApplication(configPath)
+	bootstrap.InitApplication(configPath, skipConf)
 }
 
 func main() {

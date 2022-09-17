@@ -10,8 +10,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Init(path string) {
-	conf.Init(path)
+func Init(path string, skip bool) {
+	if !skip {
+		conf.Init(path)
+	}
 
 	if conf.SystemConfig.Debug {
 		logger.Level = logrus.DebugLevel
