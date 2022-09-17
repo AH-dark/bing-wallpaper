@@ -38,6 +38,7 @@ func Init(path string) {
 		"Database": DatabaseConfig,
 		"Redis":    RedisConfig,
 		"CORS":     CORSConfig,
+		"Storage":  StorageConfig,
 	}
 
 	for k, v := range mapping {

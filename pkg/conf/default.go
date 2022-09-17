@@ -6,6 +6,14 @@ const defaultConfig = `[System]
 Listen = :8080
 Debug = false
 SessionSecret = {{SessionSecret}}
+
+[Database]
+Type = sqlite
+DBFile = bing-wallpaper.db
+
+[Storage]
+Type = local
+BasePath = data
 `
 
 const (
@@ -26,7 +34,7 @@ var DatabaseConfig = &database{
 	Password:    util.EnvStr("DB_PASSWORD", ""),
 	Database:    util.EnvStr("DB_DATABASE", "bing_wallpaper"),
 	Charset:     util.EnvStr("DB_CHARSET", "utf8"),
-	DBFile:      util.EnvStr("DB_FILE", "bing_wallpaper.db"),
+	DBFile:      util.EnvStr("DB_FILE", "bing-wallpaper.db"),
 	TablePrefix: util.EnvStr("DB_TABLE_PREFIX", ""),
 	SSLMode:     util.EnvStr("DB_SSL_MODE", "disable"),
 }
@@ -45,4 +53,16 @@ var CORSConfig = &cors{
 	MaxAge:           util.EnvInt("CORS_MAX_AGE", 600),
 	AllowHeaders:     util.EnvArr("CORS_ALLOW_HEADERS", []string{"Origin", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token", "accept", "origin", "Cache-Control", "X-Requested-With"}),
 	ExposeHeaders:    util.EnvArr("CORS_EXPOSE_HEADERS", nil),
+}
+
+var StorageConfig = &storage{
+	Type:      util.EnvStr("STORAGE_TYPE", "local"),
+	Endpoint:  util.EnvStr("STORAGE_ENDPOINT", ""),
+	Region:    util.EnvStr("STORAGE_REGION", ""),
+	AccessID:  util.EnvStr("STORAGE_ACCESS_ID", ""),
+	AccessKey: util.EnvStr("STORAGE_ACCESS_KEY", ""),
+	Bucket:    util.EnvStr("STORAGE_BUCKET", ""),
+	BasePath:  util.EnvStr("STORAGE_BASE_PATH", "data"),
+	BaseUrl:   util.EnvStr("STORAGE_BASE_URL", ""),
+	SSL:       util.EnvStr("STORAGE_SSL", "false") == "true",
 }

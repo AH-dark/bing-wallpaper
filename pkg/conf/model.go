@@ -34,3 +34,15 @@ type cors struct {
 	AllowHeaders     []string
 	ExposeHeaders    []string
 }
+
+type storage struct {
+	Type      string
+	Endpoint  string
+	Region    string
+	AccessID  string
+	AccessKey string
+	Bucket    string
+	BasePath  string
+	BaseUrl   string
+	SSL       bool
+}

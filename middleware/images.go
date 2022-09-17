@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/AH-dark/bing-wallpaper/model"
+	"github.com/AH-dark/bing-wallpaper/pkg/conf"
 	"github.com/AH-dark/bing-wallpaper/pkg/util"
 	"github.com/AH-dark/logger"
 	"github.com/gin-gonic/gin"
@@ -17,12 +17,7 @@ func ImagesHandler() gin.HandlerFunc {
 		c.Next()
 	}
 
-	path, err := model.GetSettingVal("storage_local_path")
-	if err != nil {
-		logger.Log().Panicf("Failed to get storage_local_path: %s", err)
-	}
-
-	dir := util.AbsolutePath(path)
+	dir := util.AbsolutePath(conf.StorageConfig.BasePath)
 
 	return func(c *gin.Context) {
 		logger.Log().Debugf("Request path: %s", c.Request.URL.Path)

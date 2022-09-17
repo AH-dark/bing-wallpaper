@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"github.com/AH-dark/bing-wallpaper/model"
+	"github.com/AH-dark/bing-wallpaper/pkg/conf"
 	"io"
 	"net/url"
 )
@@ -19,12 +19,7 @@ type Driver interface {
 }
 
 func NewDriver() (Driver, error) {
-	driver, err := model.GetSettingVal("storage_type")
-	if err != nil {
-		return nil, err
-	}
-
-	switch driver {
+	switch conf.StorageConfig.Type {
 	case "local":
 		return NewLocal(), nil
 	case "s3":
