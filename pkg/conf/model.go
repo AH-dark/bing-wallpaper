@@ -16,6 +16,7 @@ type database struct {
 	Charset     string
 	DBFile      string
 	TablePrefix string
+	SSLMode     string
 }
 
 type redis struct {

@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"github.com/AH-dark/bing-wallpaper/model"
 	"github.com/AH-dark/bing-wallpaper/pkg/conf"
 	"github.com/AH-dark/logger"
 	"github.com/gin-gonic/gin"
@@ -17,4 +18,6 @@ func Init(path string) {
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
+
+	model.Init()
 }

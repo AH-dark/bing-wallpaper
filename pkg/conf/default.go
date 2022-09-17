@@ -24,6 +24,7 @@ var DatabaseConfig = &database{
 	Charset:     util.EnvStr("DB_CHARSET", "utf8"),
 	DBFile:      util.EnvStr("DB_FILE", "bing_wallpaper.db"),
 	TablePrefix: util.EnvStr("DB_TABLE_PREFIX", ""),
+	SSLMode:     util.EnvStr("DB_SSL_MODE", "disable"),
 }
 
 var RedisConfig = &redis{
