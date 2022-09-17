@@ -9,7 +9,7 @@ SessionSecret = {{SessionSecret}}
 `
 
 var SystemConfig = &system{
-	Listen:        util.EnvArr("LISTEN", []string{":8080"}),
+	Listen:        util.EnvStr("LISTEN", ":8080"),
 	Debug:         util.EnvStr("DEBUG", "false") == "true",
 	SessionSecret: util.EnvStr("SESSION_SECRET", ""),
 }

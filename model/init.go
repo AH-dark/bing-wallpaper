@@ -2,6 +2,8 @@ package model
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/AH-dark/bing-wallpaper/pkg/conf"
 	"github.com/AH-dark/bing-wallpaper/pkg/util"
 	"github.com/AH-dark/logger"
@@ -14,7 +16,6 @@ import (
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"time"
 )
 
 var DB *gorm.DB

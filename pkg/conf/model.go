@@ -1,7 +1,7 @@
 package conf
 
 type system struct {
-	Listen        []string `validate:"required"`
+	Listen        string `validate:"required"`
 	Debug         bool
 	SessionSecret string
 }
