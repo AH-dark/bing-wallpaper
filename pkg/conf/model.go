@@ -20,7 +20,7 @@ type database struct {
 
 type redis struct {
 	Network  string
-	Server   []string
+	Server   string
 	Password string
 	DB       int
 }

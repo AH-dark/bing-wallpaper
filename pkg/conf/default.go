@@ -28,7 +28,7 @@ var DatabaseConfig = &database{
 
 var RedisConfig = &redis{
 	Network:  util.EnvStr("REDIS_NETWORK", "tcp"),
-	Server:   util.EnvArr("REDIS_SERVER", []string{"localhost:6379"}),
+	Server:   util.EnvStr("REDIS_SERVER", ""),
 	Password: util.EnvStr("REDIS_PASSWORD", ""),
 	DB:       util.EnvInt("REDIS_DB", 0),
 }
