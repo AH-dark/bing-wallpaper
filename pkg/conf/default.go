@@ -8,6 +8,10 @@ Debug = false
 SessionSecret = {{SessionSecret}}
 `
 
+const (
+	BackendVersion = "1.0.0"
+)
+
 var SystemConfig = &system{
 	Listen:        util.EnvStr("LISTEN", ":8080"),
 	Debug:         util.EnvStr("DEBUG", "false") == "true",

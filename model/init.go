@@ -91,4 +91,6 @@ func Init() {
 	logger.Log().Info("Database initial successful")
 
 	DB = db
+
+	migrate()
 }
