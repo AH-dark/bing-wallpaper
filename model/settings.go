@@ -68,6 +68,21 @@ func GetSettingValBool(name string) (bool, error) {
 	return strconv.ParseBool(d.Val)
 }
 
+func GetSettings(key []string) (map[string]string, error) {
+	var settings []Setting
+	err := DB.Where("name IN ?", key).Find(&settings).Error
+	if err != nil {
+		return nil, err
+	}
+
+	m := make(map[string]string, len(settings))
+	for _, v := range settings {
+		m[v.Name] = v.Val
+	}
+
+	return m, nil
+}
+
 func SetSetting(name string, val string) error {
 	err := DB.Model(&Setting{}).Where("name = ?", name).Update("val", val).Error
 	if err != nil {

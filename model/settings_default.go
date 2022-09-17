@@ -1,6 +1,8 @@
 package model
 
-import "github.com/AH-dark/bing-wallpaper/pkg/conf"
+import (
+	"github.com/AH-dark/bing-wallpaper/pkg/conf"
+)
 
 var defaultSettings = []Setting{
 	{
@@ -26,7 +28,7 @@ var defaultSettings = []Setting{
 	{
 		Name: "storage_local_path",
 		Type: SettingTypeStorage,
-		Val:  "/data",
+		Val:  "data",
 	},
 	{
 		Name: "storage_s3_endpoint",

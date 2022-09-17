@@ -25,6 +25,10 @@ func migrate() {
 }
 
 func checkMigrate() bool {
+	if conf.SystemConfig.Debug {
+		return true
+	}
+
 	if v, err := GetSetting("version"); err != nil || v.Val != conf.BackendVersion {
 		return true
 	}

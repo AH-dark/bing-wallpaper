@@ -13,7 +13,7 @@ func Exist(path string) bool {
 func CreateNestFile(path string) (*os.File, error) {
 	path = AbsolutePath(path)
 
-	err := os.MkdirAll(filepath.Dir(path), 0755)
+	err := os.MkdirAll(filepath.Dir(path), 0777)
 	if err != nil {
 		return nil, err
 	}
