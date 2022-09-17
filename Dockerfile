@@ -16,4 +16,4 @@ EXPOSE 8080
 COPY --from=Builder /app/bing-wallpaper/server server
 
 RUN chmod +x server
-CMD ./server
+CMD ./server --skip-conf
