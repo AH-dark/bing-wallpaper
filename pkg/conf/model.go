@@ -45,4 +45,5 @@ type storage struct {
 	BasePath  string
 	BaseUrl   string
 	SSL       bool
+	ACL       string
 }

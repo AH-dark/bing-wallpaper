@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"fmt"
 	"github.com/AH-dark/bing-wallpaper/pkg/conf"
 	"github.com/AH-dark/bing-wallpaper/pkg/util"
 	"github.com/aws/aws-sdk-go/aws"
@@ -9,8 +10,10 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"io"
+	"net/http"
 	"net/url"
 	"path/filepath"
+	"strings"
 )
 
 type S3Impl struct {
@@ -43,9 +46,12 @@ func (s *S3Impl) Upload(name string, file io.Reader) (*url.URL, error) {
 	key = util.FormSlash(key)
 
 	_, err := s.uploader.Upload(&s3manager.UploadInput{
-		Key:    &key,
-		Body:   file,
-		Bucket: &conf.StorageConfig.Bucket,
+		Key:                &key,
+		Body:               file,
+		Bucket:             &conf.StorageConfig.Bucket,
+		ACL:                aws.String(conf.StorageConfig.ACL),
+		ContentType:        aws.String("image/jpeg"),
+		ContentDisposition: aws.String("inline"),
 	})
 	if err != nil {
 		return nil, err
@@ -62,4 +68,46 @@ func (s *S3Impl) Upload(name string, file io.Reader) (*url.URL, error) {
 	}
 
 	return u, nil
+}
+
+func (s *S3Impl) Test() error {
+	fileKey := filepath.Join(conf.StorageConfig.BasePath, fmt.Sprintf("test-%s", util.RandString(8)))
+
+	_, err := s.uploader.Upload(&s3manager.UploadInput{
+		Key:                &fileKey,
+		Body:               io.NopCloser(strings.NewReader("test")),
+		Bucket:             &conf.StorageConfig.Bucket,
+		ACL:                aws.String(conf.StorageConfig.ACL),
+		ContentType:        aws.String("text/plain"),
+		ContentDisposition: aws.String("inline"),
+	})
+	if err != nil {
+		return err
+	}
+
+	res, err := http.DefaultClient.Get(fmt.Sprintf("%s/%s", util.RemoveSlash(conf.StorageConfig.BaseUrl), fileKey))
+	if err != nil {
+		return err
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return fmt.Errorf("unexpected status code: %d", res.StatusCode)
+	}
+
+	d, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	} else if string(d) != "test" {
+		return fmt.Errorf("unexpected body: %s", string(d))
+	}
+
+	_, err = s.client.DeleteObject(&s3.DeleteObjectInput{
+		Bucket: &conf.StorageConfig.Bucket,
+		Key:    &fileKey,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

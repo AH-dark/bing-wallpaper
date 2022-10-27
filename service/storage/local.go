@@ -7,6 +7,7 @@ import (
 	"github.com/AH-dark/bing-wallpaper/pkg/util"
 	"io"
 	"net/url"
+	"os"
 	"strings"
 )
 
@@ -47,6 +48,33 @@ func (l *LocalImpl) Upload(name string, file io.Reader) (*url.URL, error) {
 	}
 
 	return u, nil
+}
+
+func (l *LocalImpl) Test() error {
+	if !util.Exist(util.AbsolutePath(conf.StorageConfig.BasePath)) {
+		if err := os.MkdirAll(util.AbsolutePath(conf.StorageConfig.BasePath), os.ModePerm); err != nil {
+			return err
+		}
+	}
+
+	f, err := util.CreateNestFile(util.AbsolutePath(fmt.Sprintf("%s/test.txt", strings.Trim(conf.StorageConfig.BasePath, "/"))))
+	if err != nil {
+		return err
+	}
+
+	if _, err = f.WriteString("test"); err != nil {
+		return err
+	}
+
+	if err := f.Close(); err != nil {
+		return err
+	}
+
+	if err := os.Remove(util.AbsolutePath(fmt.Sprintf("%s/test.txt", strings.Trim(conf.StorageConfig.BasePath, "/")))); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func NewLocal() Driver {

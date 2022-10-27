@@ -16,6 +16,7 @@ type FileInfo struct {
 
 type Driver interface {
 	Upload(name string, file io.Reader) (*url.URL, error)
+	Test() error
 }
 
 func NewDriver() (Driver, error) {

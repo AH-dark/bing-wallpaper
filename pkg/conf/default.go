@@ -58,11 +58,12 @@ var CORSConfig = &cors{
 var StorageConfig = &storage{
 	Type:      util.EnvStr("STORAGE_TYPE", "local"),
 	Endpoint:  util.EnvStr("STORAGE_ENDPOINT", ""),
-	Region:    util.EnvStr("STORAGE_REGION", ""),
+	Region:    util.EnvStr("STORAGE_REGION", "us-east-1"),
 	AccessID:  util.EnvStr("STORAGE_ACCESS_ID", ""),
 	AccessKey: util.EnvStr("STORAGE_ACCESS_KEY", ""),
 	Bucket:    util.EnvStr("STORAGE_BUCKET", ""),
 	BasePath:  util.EnvStr("STORAGE_BASE_PATH", "data"),
 	BaseUrl:   util.EnvStr("STORAGE_BASE_URL", ""),
 	SSL:       util.EnvStr("STORAGE_SSL", "false") == "true",
+	ACL:       util.EnvStr("STORAGE_ACL", "public-read"),
 }
