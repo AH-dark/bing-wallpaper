@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/AH-dark/bing-wallpaper/controller"
 	cache "github.com/chenyahui/gin-cache"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"time"
 )
@@ -17,7 +18,7 @@ func BindApiV2(r *gin.RouterGroup) {
 		data.GET("/random", controller.RandomImageDataHandler)
 	}
 
-	proxy := r.Group("/proxy")
+	proxy := r.Group("/proxy", gzip.Gzip(gzip.BestCompression))
 	{
 		proxy.GET("/today", cache.CacheByRequestPath(store, time.Hour*24), controller.TodayImageProxyHandler)
 		proxy.GET("/single", cache.CacheByRequestURI(store, time.Hour*24), controller.SingleImageProxyHandler)

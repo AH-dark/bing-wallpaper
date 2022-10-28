@@ -1,6 +1,9 @@
 package util
 
 import (
+	"bytes"
+	"compress/gzip"
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -19,4 +22,17 @@ func CreateNestFile(path string) (*os.File, error) {
 	}
 
 	return os.Create(path)
+}
+
+func GzipCompress(reader io.Reader) (io.Reader, error) {
+	var buf bytes.Buffer
+	zw := gzip.NewWriter(&buf)
+	defer zw.Close()
+
+	_, err := io.Copy(zw, reader)
+	if err != nil {
+		return nil, err
+	}
+
+	return &buf, nil
 }
