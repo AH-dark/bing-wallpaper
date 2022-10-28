@@ -15,8 +15,8 @@ type Image struct {
 
 	Name       string      `json:"name" xml:"name" yaml:"name"`
 	OriginData interface{} `gorm:"serializer:json;size:65535" json:"origin_data" xml:"origin_data" yaml:"origin_data"`
-	HDUrl      string      `gorm:"type:varchar(255);not null;unique" json:"hd_url" xml:"hd_url" yaml:"hd_url"`
-	UHDUrl     string      `gorm:"type:varchar(255);not null;unique" json:"uhd_url" xml:"uhd_url" yaml:"uhd_url"`
+	HDUrl      string      `gorm:"not null;unique;size:65535" json:"hd_url" xml:"hd_url" yaml:"hd_url"`
+	UHDUrl     string      `gorm:"not null;unique;size:65535" json:"uhd_url" xml:"uhd_url" yaml:"uhd_url"`
 
 	View int64 `gorm:"type:bigint;not null;default:0" json:"view" xml:"view" yaml:"view"`
 	Love int64 `gorm:"type:bigint;not null;default:0" json:"love" xml:"love" yaml:"love"`
