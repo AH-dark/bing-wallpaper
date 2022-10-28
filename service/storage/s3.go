@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/AH-dark/bing-wallpaper/pkg/conf"
 	"github.com/AH-dark/bing-wallpaper/pkg/util"
-	"github.com/AH-dark/logger"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -46,21 +45,15 @@ func (s *S3Impl) Upload(name string, file io.Reader) (*url.URL, error) {
 	key := filepath.Join(conf.StorageConfig.BasePath, name)
 	key = util.FormSlash(key)
 
-	f, err := util.GzipCompress(file)
-	if err != nil {
-		return nil, err
-	}
-
-	if _, err := s.uploader.Upload(&s3manager.UploadInput{
+	_, err := s.uploader.Upload(&s3manager.UploadInput{
 		Key:                &key,
-		Body:               f,
+		Body:               file,
 		Bucket:             &conf.StorageConfig.Bucket,
 		ACL:                aws.String(conf.StorageConfig.ACL),
 		ContentType:        aws.String("image/jpeg"),
 		ContentDisposition: aws.String("inline"),
-		ContentEncoding:    aws.String("gzip"),
-	}); err != nil {
-		logger.Log().Errorf("upload to s3 failed: %s", err)
+	})
+	if err != nil {
 		return nil, err
 	}
 
