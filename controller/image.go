@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/AH-dark/bing-wallpaper/model"
+	"github.com/AH-dark/bing-wallpaper/pkg/util"
 	"github.com/gin-gonic/gin"
 	"time"
 )
@@ -12,6 +13,8 @@ func SingleDayImageHandler(c *gin.Context) {
 		c.Status(400)
 		return
 	}
+
+	date = util.DayTime(date)
 
 	image, err := model.GetImageByDate(date)
 	if err != nil {

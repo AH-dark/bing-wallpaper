@@ -17,7 +17,7 @@ BasePath = data
 `
 
 const (
-	BackendVersion = "1.0.0"
+	BackendVersion = "1.1.0"
 )
 
 var SystemConfig = &system{
