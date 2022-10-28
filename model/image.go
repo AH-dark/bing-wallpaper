@@ -14,7 +14,7 @@ type Image struct {
 	StartDate time.Time `gorm:"not null;unique" json:"start_date" xml:"start_date" yaml:"start_date"`
 
 	Name       string      `json:"name" xml:"name" yaml:"name"`
-	OriginData interface{} `gorm:"serializer:json;size:512" json:"origin_data" xml:"origin_data" yaml:"origin_data"`
+	OriginData interface{} `gorm:"serializer:json;size:65535" json:"origin_data" xml:"origin_data" yaml:"origin_data"`
 	HDUrl      string      `gorm:"type:varchar(255);not null;unique" json:"hd_url" xml:"hd_url" yaml:"hd_url"`
 	UHDUrl     string      `gorm:"type:varchar(255);not null;unique" json:"uhd_url" xml:"uhd_url" yaml:"uhd_url"`
 
